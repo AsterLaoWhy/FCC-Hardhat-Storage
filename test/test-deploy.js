@@ -19,4 +19,19 @@ describe("SimpleStorage", function () {
         const currentValue = await simpleStorage.retrieve()
         assert.equal(currentValue.toString(), expectedValue)
     })
+    it("Adds a person and number", async function () {
+        const name = "Bill"
+        const expectedValue = "7"
+        const transactionResponse = await simpleStorage.addPerson(
+            name,
+            expectedValue
+        )
+        await transactionResponse.wait(1)
+
+        let person = await simpleStorage.people(0)
+        person = person.toString().split(",")
+
+        assert.equal(person[1], name)
+        assert.equal(person[0], expectedValue)
+    })
 })
